@@ -1,0 +1,16 @@
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\Comparacion.exe.config
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\Comparacion.exe
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\Comparacion.pdb
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.csprojAssemblyReference.cache
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.Form1.resources
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.Properties.Resources.resources
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.csproj.GenerateResource.cache
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.csproj.CoreCompileInputs.cache
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.exe
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.pdb
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.csproj.ResolveComReference.cache
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\SpreadsheetLight.dll
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\SpreadsheetLight.xml
+C:\Users\Isai\source\repos\Comparacion\Comparacion\obj\Debug\Comparacion.csproj.CopyComplete
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Isai\source\repos\Comparacion\Comparacion\bin\Debug\DocumentFormat.OpenXml.xml
