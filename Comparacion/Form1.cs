@@ -194,7 +194,7 @@ namespace Comparacion
         {
             for(int i = 1; i<=dataGridView3.Rows.Count; i++)
             {
-                dataGridView3.Rows[i-1].Cells[13].Value = "=D" + i.ToString() + "*K4";
+                dataGridView3.Rows[i-1].Cells[12].Value = "=D" + i.ToString() + "*K"+i.ToString();
             }
         }
     }
