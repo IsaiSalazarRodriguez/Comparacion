@@ -1,6 +1,7 @@
 ﻿using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Comparacion
         public String Nombre = "";
         public int indice = 0;
         public List<Parte> modelos = new List<Parte>();
-        public List<Modelo_canasta> modelosCanasta = new List<Modelo_canasta>();
+        public BindingList<Modelo_canasta> modelosCanasta = new BindingList<Modelo_canasta>();
         public Hoja(String ruta, String nom)
         {
             path = ruta;
@@ -43,6 +44,7 @@ namespace Comparacion
                 r++;
             }
             sl.CloseWithoutSaving();
+            //System.Runtime.InteropServices.Marshal.ReleaseComObject(sl);
         }
 
         public void obtenRenglon(String Nmodelo, int cant, String Operacion)
@@ -59,7 +61,7 @@ namespace Comparacion
                 Modelo_canasta modeloC = new Modelo_canasta();
                 modeloC.Area = "";
                 modeloC.Leavel = Operacion;
-                modeloC.Item = sl.GetCellFormula(r, 3);
+                modeloC.Item = "="+sl.GetCellFormula(r, 3);
                 modeloC.Qty = cant;
                 modeloC.ReqDate = sl.GetCellValueAsString(r, 5);
                 modeloC.ProductType = sl.GetCellValueAsString(r, 6);
@@ -69,16 +71,16 @@ namespace Comparacion
                 modeloC.LongDescription = sl.GetCellValueAsString(r, 10);
                 modeloC.EachList = sl.GetCellValueAsString(r, 11);
                 modeloC.EachNet = sl.GetCellValueAsString(r, 12);
-                modeloC.TotalList = sl.GetCellFormula(r, 13);
+                modeloC.TotalList = "="+ sl.GetCellFormula(r, 13);
                 modeloC.Discount = sl.GetCellValueAsString(r, 14);
-                modeloC.TotalNet = sl.GetCellFormula(r, 15);
+                modeloC.TotalNet = "="+sl.GetCellFormula(r, 15);
                 modeloC.EachXferList = sl.GetCellValueAsString(r, 16);
                 modeloC.EachXferNet = sl.GetCellValueAsString(r, 17);
                 modeloC.TotXferList = sl.GetCellFormula(r, 18);
                 modeloC.XferDisc = sl.GetCellValueAsString(r, 19);
-                modeloC.TotXferNet = sl.GetCellFormula(r, 20);
+                modeloC.TotXferNet = "="+sl.GetCellFormula(r, 20);
                 modeloC.EachInitialXfer = sl.GetCellValueAsString(r, 21);
-                modeloC.TotInitialXfer = sl.GetCellFormula(r, 22);
+                modeloC.TotInitialXfer = "="+sl.GetCellFormula(r, 22);
                 modeloC.VendorCode = sl.GetCellValueAsString(r, 23);
                 modeloC.Weight = sl.GetCellValueAsString(r, 24);
                 modeloC.MarketGroup = sl.GetCellValueAsString(r, 25);

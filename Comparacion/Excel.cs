@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,11 @@ namespace Comparacion
             
         }
 
-        public Excel() { }
+        public Excel() {
+            excel.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+            KillSpecificExcelFileProcess(path);
+        }
 
         private void cargaLista()
         {
@@ -42,10 +47,27 @@ namespace Comparacion
                 }
             }
             wb.Close(0);
+            excel.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
+            KillSpecificExcelFileProcess(path);
+           
+
+        }
+        private void KillSpecificExcelFileProcess(string excelFileName)
+        {
+            var processes = from p in Process.GetProcessesByName("EXCEL")
+                            select p;
+
+            foreach (var process in processes)
+            {
+                if (process.MainWindowTitle == "Microsoft Excel - " + excelFileName)
+                    process.Kill();
+            }
         }
 
-        
-       
-        
+
+
     }
 }

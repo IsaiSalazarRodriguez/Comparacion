@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Office.Interop.Excel;
+
 using System.Data.Odbc;
 namespace Comparacion
 {
@@ -81,8 +81,9 @@ namespace Comparacion
         {
             int indiceA;
             int indiceB;
-
-            try
+            dataGridView3.Rows.Clear();
+            
+           try
             {
                 indiceA = listBox1.SelectedIndex;
                 indiceB = listBox2.SelectedIndex;
@@ -92,6 +93,7 @@ namespace Comparacion
                 dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
                 comparaListas();
                 dataGridView3.DataSource = archivo3.listaHojas[0].modelosCanasta;
+                cambiaCeldas();
 
             }
             catch (Exception)
@@ -119,6 +121,7 @@ namespace Comparacion
             bool band2 = false;
             foreach(Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
             {
+                band1 = true;
                 foreach(Parte par in archivo1.listaHojas[listBox1.SelectedIndex].modelos)
                 {
                     if (par2.parte.Equals(par.parte))
@@ -185,6 +188,14 @@ namespace Comparacion
         private void button5_Click(object sender, EventArgs e)
         {
             exportaraexcel(dataGridView3);
+        }
+
+        private void cambiaCeldas()
+        {
+            for(int i = 1; i<=dataGridView3.Rows.Count; i++)
+            {
+                dataGridView3.Rows[i-1].Cells[13].Value = "=D" + i.ToString() + "*K4";
+            }
         }
     }
 }
