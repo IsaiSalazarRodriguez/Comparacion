@@ -225,6 +225,34 @@ namespace Comparacion
                 dataGridView3.Rows[i - 1].Cells[19].Value = "=D" + (i + 1).ToString() +"*Q"+ (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[21].Value = "=D" + (i + 1).ToString() + "*Q" + (i + 1).ToString();
             }
+            dataGridView3.Rows[0].Cells[2].Value = 1.ToString(); ;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                int indiceB = listBox2.SelectedIndex;
+                archivo2.listaHojas[indiceB].obtenTabla();
+                dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
+                foreach (Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
+                {
+                    if (!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad"))
+                    {
+                        listBox4.Items.Add(par2.parte);
+                    }
+
+                }
+                dataGridView3.DataSource = archivo3.listaHojas[0].modelosCanasta;
+                cambiaCeldas();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Selecciona un elemento de ambas listas");
+            }
+            
         }
     }
 }
