@@ -47,7 +47,7 @@ namespace Comparacion
             //System.Runtime.InteropServices.Marshal.ReleaseComObject(sl);
         }
 
-        public void obtenRenglon(String Nmodelo, int cant, String Operacion)
+        public bool obtenRenglon(String Nmodelo, int cant, String Operacion)
         {
             
             SLDocument sl = new SLDocument(path, Nombre);
@@ -101,54 +101,15 @@ namespace Comparacion
                 modeloC.EEC = sl.GetCellValueAsString(r, 40);
 
                 modelosCanasta.Add(modeloC);
+                sl.CloseWithoutSaving();
+                return true;
             }
             else
             {
-                Modelo_canasta modeloC = new Modelo_canasta();
-                modeloC.Area = "La pieza no esta en la basket";
-                modeloC.Leavel = Operacion;
-                modeloC.Item = sl.GetCellFormula(r, 3);
-                modeloC.Qty = sl.GetCellValueAsInt32(r,4);
-                modeloC.ReqDate = sl.GetCellValueAsString(r, 5);
-                modeloC.ProductType = sl.GetCellValueAsString(r, 6);
-                modeloC.Model = sl.GetCellValueAsString(r, 7);
-                modeloC.AuxSpec1 = sl.GetCellValueAsString(r, 8);
-                modeloC.Description = sl.GetCellValueAsString(r, 9);
-                modeloC.LongDescription = sl.GetCellValueAsString(r, 10);
-                modeloC.EachList = sl.GetCellValueAsString(r, 11);
-                modeloC.EachNet = sl.GetCellValueAsString(r, 12);
-                modeloC.TotalList = sl.GetCellFormula(r, 13);
-                modeloC.Discount = sl.GetCellValueAsString(r, 14);
-                modeloC.TotalNet = sl.GetCellFormula(r, 15);
-                modeloC.EachXferList = sl.GetCellValueAsString(r, 16);
-                modeloC.EachXferNet = sl.GetCellValueAsString(r, 17);
-                modeloC.TotXferList = sl.GetCellFormula(r, 18);
-                modeloC.XferDisc = sl.GetCellValueAsString(r, 19);
-                modeloC.TotXferNet = sl.GetCellFormula(r, 20);
-                modeloC.EachInitialXfer = sl.GetCellValueAsString(r, 21);
-                modeloC.TotInitialXfer = sl.GetCellFormula(r, 22);
-                modeloC.VendorCode = sl.GetCellValueAsString(r, 23);
-                modeloC.Weight = sl.GetCellValueAsString(r, 24);
-                modeloC.MarketGroup = sl.GetCellValueAsString(r, 25);
-                modeloC.setNet = sl.GetCellValueAsString(r, 26);
-                modeloC.DiscountA = sl.GetCellValueAsString(r, 27);
-                modeloC.DiscountB = sl.GetCellValueAsString(r, 28);
-                modeloC.DiscountC = sl.GetCellValueAsString(r, 28);
-                modeloC.DiscountD = sl.GetCellValueAsString(r, 30);
-                modeloC.DiscountE = sl.GetCellValueAsString(r, 31);
-                modeloC.LeadTime = sl.GetCellValueAsString(r, 32);
-                modeloC.LifeCycle = sl.GetCellValueAsString(r, 33);
-                modeloC.Country = sl.GetCellValueAsString(r, 34);
-                modeloC.LineItem = sl.GetCellValueAsString(r, 35);
-                modeloC.MfgCurrency = sl.GetCellValueAsString(r, 36);
-                modeloC.TagSet = sl.GetCellValueAsString(r, 37);
-                modeloC.TagQty = sl.GetCellValueAsString(r, 38);
-                modeloC.ModeloJornadas = sl.GetCellValueAsString(r, 39);
-                modeloC.EEC = sl.GetCellValueAsString(r, 40);
-
-                modelosCanasta.Add(modeloC);
+                sl.CloseWithoutSaving();
+                return false;
             }
-            sl.CloseWithoutSaving();
+            
             
         }
     }

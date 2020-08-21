@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Data.Odbc;
+using Microsoft.Office.Interop.Excel;
+
 namespace Comparacion
 {
     public partial class Form1 : Form
@@ -118,7 +120,7 @@ namespace Comparacion
         private void comparaListas()
         {
             bool band1 = true;
-            bool band2 = false;
+            bool band2 = true;
             foreach(Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
             {
                 band1 = true;
@@ -128,7 +130,10 @@ namespace Comparacion
                     {
                         if (par.cantidad != par2.cantidad)
                         {
-                            archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cambio cantidad de " + archivo2.listaHojas[listBox2.SelectedIndex].Nombre);
+                            if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad"))
+                            {
+                                listBox4.Items.Add(par2.parte);
+                            }
                         }
                         band1 = false;
                         break;
@@ -136,9 +141,28 @@ namespace Comparacion
                 }
                 if (band1)
                 {
-                    archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Nueva parte de " + archivo2.listaHojas[listBox2.SelectedIndex].Nombre);
+                    if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Agregado"))
+                    {
+                        listBox4.Items.Add(par2.parte);
+                    }
                 }
                 
+            }
+            foreach(Parte partesita in archivo1.listaHojas[listBox1.SelectedIndex].modelos)
+            {
+                band2 = true;
+                foreach(Parte partesota in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
+                {
+                    if (partesota.parte.Equals(partesita.parte))
+                    {
+                        band2 = false;
+                        
+                    }
+                }
+                if (band2)
+                {
+                    listBox3.Items.Add(partesita.parte);
+                }
             }
         }
 
@@ -146,9 +170,9 @@ namespace Comparacion
         {
 
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-
-            excel.Application.Workbooks.Add(true);
-
+            
+            Workbook compa = excel.Application.Workbooks.Add(true);
+            
             int IndiceColumna = 0;
 
             foreach (DataGridViewColumn col in tabla.Columns) // Columnas
@@ -181,7 +205,7 @@ namespace Comparacion
             }
 
             excel.Visible = true;
-
+            compa.SaveAs(archivo2.listaHojas[listBox2.SelectedIndex].Nombre+ ".xlsx");
 
         }
 
@@ -192,9 +216,14 @@ namespace Comparacion
 
         private void cambiaCeldas()
         {
-            for(int i = 1; i<=dataGridView3.Rows.Count; i++)
+            for(int i = 1; i<=dataGridView3.Rows.Count-1; i++)
             {
-                dataGridView3.Rows[i-1].Cells[12].Value = "=D" + i.ToString() + "*K"+i.ToString();
+                dataGridView3.Rows[i-1].Cells[12].Value = "=D" + (i+1).ToString() + "*K"+ (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[2].Value = "=MAX($C$1:C"+ (i + 1).ToString()+")+1" ;
+                dataGridView3.Rows[i - 1].Cells[14].Value = "=D"+ (i + 1).ToString()+"*L"+ (i + 1).ToString() + (i + 1).ToString() + "*K" + (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[17].Value = "=D" + (i + 1).ToString() +"*P" + (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[19].Value = "=D" + (i + 1).ToString() +"*Q"+ (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[21].Value = "=D" + (i + 1).ToString() + "*Q" + (i + 1).ToString();
             }
         }
     }

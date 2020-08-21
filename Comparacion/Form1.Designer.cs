@@ -45,6 +45,9 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.listBox4 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -124,9 +127,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(1050, 15);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "label3";
+            this.label3.Text = "BASKET";
             // 
             // textBox3
             // 
@@ -137,7 +140,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(392, 199);
+            this.button4.Location = new System.Drawing.Point(392, 104);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 9;
@@ -187,19 +190,50 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1133, 411);
+            this.button5.Location = new System.Drawing.Point(392, 255);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(91, 59);
+            this.button5.Size = new System.Drawing.Size(75, 59);
             this.button5.TabIndex = 15;
             this.button5.Text = "Exportar a Excel";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(392, 188);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 16;
+            this.button6.Text = "Directo";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // listBox3
+            // 
+            this.listBox3.ForeColor = System.Drawing.Color.Red;
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(979, 369);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(175, 251);
+            this.listBox3.TabIndex = 17;
+            // 
+            // listBox4
+            // 
+            this.listBox4.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.listBox4.FormattingEnabled = true;
+            this.listBox4.Location = new System.Drawing.Point(1199, 369);
+            this.listBox4.Name = "listBox4";
+            this.listBox4.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBox4.Size = new System.Drawing.Size(171, 251);
+            this.listBox4.TabIndex = 18;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1448, 648);
+            this.Controls.Add(this.listBox4);
+            this.Controls.Add(this.listBox3);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.dataGridView2);
@@ -247,6 +281,9 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.ListBox listBox4;
     }
 }
 
