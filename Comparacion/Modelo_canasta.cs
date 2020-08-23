@@ -11,7 +11,7 @@ namespace Comparacion
         public String Area { set; get; }
         public String Leavel { set; get; }
         public String Item { set; get; }
-        public int Qty { set; get; }
+        public String Qty { set; get; }
         public String ReqDate { set; get; }
         public String ProductType { set; get; }
         public String Model { set; get; }

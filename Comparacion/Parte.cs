@@ -8,7 +8,7 @@ namespace Comparacion
 {
     public class Parte
     {
-        public int cantidad { get; set; }
+        public String cantidad { get; set; }
         public String parte { get; set; }
         public String Descripcion { get; set; }
         

@@ -93,7 +93,15 @@ namespace Comparacion
                 archivo2.listaHojas[indiceB].obtenTabla();
                 dataGridView1.DataSource = archivo1.listaHojas[indiceA].modelos;
                 dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
+                Modelo_canasta gabinete = new Modelo_canasta();
+                
+                gabinete.Area = archivo2.listaHojas[listBox2.SelectedIndex].Nombre;
+                archivo3.listaHojas[0].modelosCanasta.Add(gabinete);
+                
                 comparaListas();
+                Modelo_canasta total = new Modelo_canasta();
+                total.EachNet = "Process Level Total";
+                archivo3.listaHojas[0].modelosCanasta.Add(total);
                 dataGridView3.DataSource = archivo3.listaHojas[0].modelosCanasta;
                 cambiaCeldas();
 
@@ -128,7 +136,7 @@ namespace Comparacion
                 {
                     if (par2.parte.Equals(par.parte))
                     {
-                        if (par.cantidad != par2.cantidad)
+                        if (par.cantidad.Equals(par2.cantidad) == false)
                         {
                             if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad"))
                             {
@@ -216,23 +224,31 @@ namespace Comparacion
 
         private void cambiaCeldas()
         {
-            for(int i = 1; i<=dataGridView3.Rows.Count-1; i++)
+            for(int i = 2; i<=dataGridView3.Rows.Count-2; i++)
             {
                 dataGridView3.Rows[i-1].Cells[12].Value = "=D" + (i+1).ToString() + "*K"+ (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[2].Value = "=MAX($C$1:C"+ (i + 1).ToString()+")+1" ;
-                dataGridView3.Rows[i - 1].Cells[14].Value = "=D"+ (i + 1).ToString()+"*L"+ (i + 1).ToString() + (i + 1).ToString() + "*K" + (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[14].Value = "=D"+ (i + 1).ToString()+"*L"+ (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[17].Value = "=D" + (i + 1).ToString() +"*P" + (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[19].Value = "=D" + (i + 1).ToString() +"*Q"+ (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[21].Value = "=D" + (i + 1).ToString() + "*Q" + (i + 1).ToString();
             }
-            dataGridView3.Rows[0].Cells[2].Value = 1.ToString(); ;
+            dataGridView3.Rows[dataGridView3.Rows.Count-2].Cells[12].Value = "=SUMA(M3:M"+ (dataGridView3.Rows.Count -1).ToString()+")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[14].Value = "=SUMA(O3:O" + (dataGridView3.Rows.Count-1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[17].Value = "=SUMA(R3:R" + (dataGridView3.Rows.Count-1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[19].Value = "=SUMA(T3:T" + (dataGridView3.Rows.Count-1).ToString() + ")";
+            
+            
         }
-
+        
         private void button6_Click(object sender, EventArgs e)
         {
+            dataGridView3.Rows.Clear();
             try
             {
-                
+                Modelo_canasta gabinete = new Modelo_canasta();
+                gabinete.Area = archivo2.listaHojas[listBox2.SelectedIndex].Nombre;
+                archivo3.listaHojas[0].modelosCanasta.Add(gabinete);
                 int indiceB = listBox2.SelectedIndex;
                 archivo2.listaHojas[indiceB].obtenTabla();
                 dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
@@ -244,6 +260,12 @@ namespace Comparacion
                     }
 
                 }
+                
+                Modelo_canasta total = new Modelo_canasta();
+                total.EachNet = "Process Level Total";
+                
+                
+                archivo3.listaHojas[0].modelosCanasta.Add(total);
                 dataGridView3.DataSource = archivo3.listaHojas[0].modelosCanasta;
                 cambiaCeldas();
 

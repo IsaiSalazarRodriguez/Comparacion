@@ -37,7 +37,7 @@ namespace Comparacion
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(r, 1)))
             {
                 Parte modelo = new Parte();
-                modelo.cantidad = sl.GetCellValueAsInt32(r, 1);
+                modelo.cantidad = sl.GetCellValueAsString(r, 1);
                 modelo.parte = sl.GetCellValueAsString(r, 2);
                 modelo.Descripcion = sl.GetCellValueAsString(r, 3);
                 modelos.Add(modelo);
@@ -47,7 +47,7 @@ namespace Comparacion
             //System.Runtime.InteropServices.Marshal.ReleaseComObject(sl);
         }
 
-        public bool obtenRenglon(String Nmodelo, int cant, String Operacion)
+        public bool obtenRenglon(String Nmodelo, String cant, String Operacion)
         {
             
             SLDocument sl = new SLDocument(path, Nombre);
