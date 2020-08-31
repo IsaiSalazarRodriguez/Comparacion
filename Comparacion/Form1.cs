@@ -84,7 +84,8 @@ namespace Comparacion
             int indiceA;
             int indiceB;
             dataGridView3.Rows.Clear();
-            
+            listBox4.Items.Clear();
+            listBox3.Items.Clear();
            try
             {
                 indiceA = listBox1.SelectedIndex;
@@ -244,6 +245,8 @@ namespace Comparacion
         private void button6_Click(object sender, EventArgs e)
         {
             dataGridView3.Rows.Clear();
+            listBox3.Items.Clear();
+            listBox4.Items.Clear();
             try
             {
                 Modelo_canasta gabinete = new Modelo_canasta();
