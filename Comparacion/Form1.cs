@@ -233,10 +233,10 @@ namespace Comparacion
                 dataGridView3.Rows[i - 1].Cells[19].Value = "=D" + (i + 1).ToString() +"*Q"+ (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[21].Value = "=D" + (i + 1).ToString() + "*Q" + (i + 1).ToString();
             }
-            dataGridView3.Rows[dataGridView3.Rows.Count-2].Cells[12].Value = "=SUMA(M3:M"+ (dataGridView3.Rows.Count -1).ToString()+")";
-            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[14].Value = "=SUMA(O3:O" + (dataGridView3.Rows.Count-1).ToString() + ")";
-            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[17].Value = "=SUMA(R3:R" + (dataGridView3.Rows.Count-1).ToString() + ")";
-            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[19].Value = "=SUMA(T3:T" + (dataGridView3.Rows.Count-1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count-2].Cells[12].Value = "=SUM(M3:M"+ (dataGridView3.Rows.Count -1).ToString()+")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[14].Value = "=SUM(O3:O" + (dataGridView3.Rows.Count-1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[17].Value = "=SUM(R3:R" + (dataGridView3.Rows.Count-1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[19].Value = "=SUM(T3:T" + (dataGridView3.Rows.Count-1).ToString() + ")";
             
             
         }
