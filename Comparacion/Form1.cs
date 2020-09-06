@@ -18,6 +18,7 @@ namespace Comparacion
         private String ruta1;
         private String ruta2;
         private String ruta3;
+        private BindingList<Modelo_canasta> superlista = new BindingList<Modelo_canasta>();
         Excel archivo1;
         Excel archivo2;
         Excel archivo3;
@@ -58,7 +59,10 @@ namespace Comparacion
                 textBox3.Text = ruta3;
                 archivo3 = new Excel();
                 Hoja nueva = new Hoja(ruta3, "BASKET");
+                nueva.obtenBasketMaestra();
                 archivo3.listaHojas.Add(nueva);
+                
+                
             }
         }
 
@@ -128,6 +132,7 @@ namespace Comparacion
 
         private void comparaListas()
         {
+            int cont = 0;
             bool band1 = true;
             bool band2 = true;
             foreach(Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
@@ -139,9 +144,13 @@ namespace Comparacion
                     {
                         if (par.cantidad.Equals(par2.cantidad) == false)
                         {
-                            if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad"))
+                            if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad",cont))
                             {
                                 listBox4.Items.Add(par2.parte);
+                            }
+                            else
+                            {
+                                cont++;
                             }
                         }
                         band1 = false;
@@ -150,9 +159,13 @@ namespace Comparacion
                 }
                 if (band1)
                 {
-                    if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Agregado"))
+                    if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Agregado",cont))
                     {
                         listBox4.Items.Add(par2.parte);
+                    }
+                    else
+                    {
+                        cont++;
                     }
                 }
                 
@@ -179,9 +192,9 @@ namespace Comparacion
         {
 
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            
-            Workbook compa = excel.Application.Workbooks.Add(true);
-            
+
+            excel.Application.Workbooks.Add(true);
+
             int IndiceColumna = 0;
 
             foreach (DataGridViewColumn col in tabla.Columns) // Columnas
@@ -214,7 +227,7 @@ namespace Comparacion
             }
 
             excel.Visible = true;
-            compa.SaveAs(archivo2.listaHojas[listBox2.SelectedIndex].Nombre+ ".xlsx");
+
 
         }
 
@@ -225,25 +238,73 @@ namespace Comparacion
 
         private void cambiaCeldas()
         {
-            for(int i = 2; i<=dataGridView3.Rows.Count-2; i++)
+            for (int i = 2; i <= dataGridView3.Rows.Count - 2; i++)
             {
-                dataGridView3.Rows[i-1].Cells[12].Value = "=D" + (i+1).ToString() + "*K"+ (i + 1).ToString();
-                dataGridView3.Rows[i - 1].Cells[2].Value = "=MAX($C$1:C"+ (i + 1).ToString()+")+1" ;
-                dataGridView3.Rows[i - 1].Cells[14].Value = "=D"+ (i + 1).ToString()+"*L"+ (i + 1).ToString();
-                dataGridView3.Rows[i - 1].Cells[17].Value = "=D" + (i + 1).ToString() +"*P" + (i + 1).ToString();
-                dataGridView3.Rows[i - 1].Cells[19].Value = "=D" + (i + 1).ToString() +"*Q"+ (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[12].Value = "=D" + (i + 1).ToString() + "*K" + (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[2].Value = "=MAX($C$1:C" + (i + 1).ToString() + ")+1";
+                dataGridView3.Rows[i - 1].Cells[14].Value = "=D" + (i + 1).ToString() + "*L" + (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[17].Value = "=D" + (i + 1).ToString() + "*P" + (i + 1).ToString();
+                dataGridView3.Rows[i - 1].Cells[19].Value = "=D" + (i + 1).ToString() + "*Q" + (i + 1).ToString();
                 dataGridView3.Rows[i - 1].Cells[21].Value = "=D" + (i + 1).ToString() + "*Q" + (i + 1).ToString();
             }
-            dataGridView3.Rows[dataGridView3.Rows.Count-2].Cells[12].Value = "=SUM(M3:M"+ (dataGridView3.Rows.Count -1).ToString()+")";
-            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[14].Value = "=SUM(O3:O" + (dataGridView3.Rows.Count-1).ToString() + ")";
-            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[17].Value = "=SUM(R3:R" + (dataGridView3.Rows.Count-1).ToString() + ")";
-            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[19].Value = "=SUM(T3:T" + (dataGridView3.Rows.Count-1).ToString() + ")";
-            
-            
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[12].Value = "=SUM(M3:M" + (dataGridView3.Rows.Count - 1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[14].Value = "=SUM(O3:O" + (dataGridView3.Rows.Count - 1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[17].Value = "=SUM(R3:R" + (dataGridView3.Rows.Count - 1).ToString() + ")";
+            dataGridView3.Rows[dataGridView3.Rows.Count - 2].Cells[19].Value = "=SUM(T3:T" + (dataGridView3.Rows.Count - 1).ToString() + ")";
+
+
         }
-        
+        private void cambiaLista()
+        {
+            int inicio = 3;
+            String aux;
+            for (int i = 2; i < superlista.Count; i++)
+            {
+                if (superlista[i].EachNet != null)
+                {
+                    if (superlista[i].EachNet.Equals("Process Level Total"))
+                    {
+                        superlista[i].TotalList = "=SUM(M" + inicio.ToString() + ":M" + (i + 1).ToString() + ")";
+                        superlista[i].TotalNet = "=SUM(O" + inicio.ToString() + ":O" + (i + 1).ToString() + ")";
+                        superlista[i].TotXferList = "=SUM(R" + inicio.ToString() + ":R" + (i + 1).ToString() + ")";
+                        superlista[i].TotXferNet = "=SUM(T" + inicio.ToString() + ":T" + (i + 1).ToString() + ")";
+                        inicio++;
+                    }
+                    else
+                    {
+                        superlista[i].Item = "=MAX($C$1:C" + (i + 2).ToString() + ")+1";
+                        superlista[i].TotalList = "=D" + (i + 2).ToString() + "*K" + (i + 2).ToString();
+
+                        superlista[i].TotalNet = "=D" + (i + 2).ToString() + "*L" + (i + 2).ToString();
+                        superlista[i].TotXferList = "=D" + (i + 2).ToString() + "*P" + (i + 2).ToString();
+                        superlista[i].TotXferNet = "=D" + (i + 2).ToString() + "*Q" + (i + 2).ToString();
+                        superlista[i].TotInitialXfer = "=D" + (i + 2).ToString() + "*Q" + (i + 2).ToString();
+                        inicio++;
+                        superlista[i].setvisitado();
+
+                    }
+                }
+                else
+                {
+                    inicio++;
+                }
+
+            }
+            foreach (Modelo_canasta super in superlista)
+            {
+                if (super.TotalNet != null && super.TotalList != null)
+                {
+                    listBox3.Items.Add(super.TotalList);
+                    listBox4.Items.Add(super.TotalNet);
+                }
+            }
+
+
+        }
+
         private void button6_Click(object sender, EventArgs e)
         {
+            int cont = 0;
             dataGridView3.Rows.Clear();
             listBox3.Items.Clear();
             listBox4.Items.Clear();
@@ -257,11 +318,14 @@ namespace Comparacion
                 dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
                 foreach (Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
                 {
-                    if (!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad"))
+                    if (!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad", cont))
                     {
                         listBox4.Items.Add(par2.parte);
                     }
-
+                    else
+                    {
+                        cont++;
+                    }
                 }
                 
                 Modelo_canasta total = new Modelo_canasta();
@@ -278,6 +342,97 @@ namespace Comparacion
                 MessageBox.Show("Selecciona un elemento de ambas listas");
             }
             
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            int ren = 0;
+            Modelo_canasta modeloC;
+            dataGridView3.Rows.Clear();
+            listBox3.Items.Clear();
+            listBox4.Items.Clear();
+            superlista.Clear();
+            try
+            {
+
+                
+                for(int j = 0; j<archivo2.listaHojas.Count; j++)
+                {
+                    Modelo_canasta gabinete = new Modelo_canasta();
+                    gabinete.Area = archivo2.listaHojas[j].Nombre;
+                    superlista.Add(gabinete);
+                    ren++;
+                    archivo2.listaHojas[j].obtenTabla();
+                    foreach (Parte par2 in archivo2.listaHojas[j].modelos)
+                    {
+                        foreach(Modelo_canasta mod in archivo3.listaHojas[0].basketMaestra)
+                        {
+                            if (mod.Model.Contains(par2.parte))
+                            {
+                                modeloC = new Modelo_canasta();
+                                modeloC.Area = mod.Area;
+                                modeloC.Leavel = mod.Leavel;
+                                modeloC.Item = mod.Item;
+                                modeloC.Qty = par2.cantidad;
+                                modeloC.ReqDate = mod.ReqDate;
+                                modeloC.ProductType = mod.ProductType;
+                                modeloC.Model = mod.Model;
+                                modeloC.AuxSpec1 = mod.AuxSpec1;
+                                modeloC.Description = mod.Description;
+                                modeloC.LongDescription = mod.LongDescription;
+                                modeloC.EachList = mod.EachList;
+                                modeloC.EachNet = mod.EachNet;
+                                modeloC.TotalList = mod.EachList;
+                                modeloC.Discount = mod.Discount;
+                                modeloC.TotalNet = mod.TotalNet;
+                                modeloC.EachXferList = mod.EachXferList;
+                                modeloC.EachXferNet = mod.EachXferNet;
+                                modeloC.TotXferList = mod.TotXferList;
+                                modeloC.XferDisc = mod.XferDisc;
+                                modeloC.TotXferNet = mod.TotXferNet;
+                                modeloC.EachInitialXfer = mod.EachInitialXfer;
+                                modeloC.TotInitialXfer = mod.TotInitialXfer;
+                                modeloC.VendorCode = mod.VendorCode;
+                                modeloC.Weight = mod.Weight;
+                                modeloC.MarketGroup = mod.MarketGroup;
+                                modeloC.setNet = mod.setNet;
+                                modeloC.DiscountA = mod.DiscountA;
+                                modeloC.DiscountB = mod.DiscountB;
+                                modeloC.DiscountC = mod.DiscountC;
+                                modeloC.DiscountD = mod.DiscountD;
+                                modeloC.DiscountE = mod.DiscountE;
+                                modeloC.LeadTime = mod.LeadTime;
+                                modeloC.LifeCycle = mod.LifeCycle;
+                                modeloC.Country = mod.Country;
+                                modeloC.LineItem = mod.LineItem;
+                                modeloC.MfgCurrency = mod.MfgCurrency;
+                                modeloC.TagSet = mod.TagSet;
+                                modeloC.TagQty = mod.TagQty;
+                                modeloC.ModeloJornadas = mod.ModeloJornadas;
+                                modeloC.EEC = mod.EEC;
+                                superlista.Add(modeloC);
+                                break;
+
+                            }
+                        }
+                    }
+
+                    Modelo_canasta total = new Modelo_canasta();
+                    total.EachNet = "Process Level Total";
+                    
+
+                    superlista.Add(total);
+                    
+                }
+            cambiaLista();
+            dataGridView3.DataSource = superlista;
+            
+                
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Selecciona un elemento de ambas listas");
+            }
         }
     }
 }

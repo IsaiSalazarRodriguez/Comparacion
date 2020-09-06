@@ -17,6 +17,7 @@ namespace Comparacion
         public int indice = 0;
         public List<Parte> modelos = new List<Parte>();
         public BindingList<Modelo_canasta> modelosCanasta = new BindingList<Modelo_canasta>();
+        public List<Modelo_canasta> basketMaestra = new List<Modelo_canasta>();
         public Hoja(String ruta, String nom)
         {
             path = ruta;
@@ -47,7 +48,7 @@ namespace Comparacion
             //System.Runtime.InteropServices.Marshal.ReleaseComObject(sl);
         }
 
-        public bool obtenRenglon(String Nmodelo, String cant, String Operacion)
+        public bool obtenRenglon(String Nmodelo, String cant, String Operacion, int ren)
         {
             
             SLDocument sl = new SLDocument(path, Nombre);
@@ -58,10 +59,11 @@ namespace Comparacion
             }
             if (sl.GetCellValueAsString(r, 7).Equals(Nmodelo))
             {
+               
                 Modelo_canasta modeloC = new Modelo_canasta();
                 modeloC.Area = "";
                 modeloC.Leavel = Operacion;
-                modeloC.Item = "="+sl.GetCellFormula(r, 3);
+                modeloC.Item = "=" + sl.GetCellFormula(r, 3);
                 modeloC.Qty = cant;
                 modeloC.ReqDate = sl.GetCellValueAsString(r, 5);
                 modeloC.ProductType = sl.GetCellValueAsString(r, 6);
@@ -71,16 +73,16 @@ namespace Comparacion
                 modeloC.LongDescription = sl.GetCellValueAsString(r, 10);
                 modeloC.EachList = sl.GetCellValueAsString(r, 11);
                 modeloC.EachNet = sl.GetCellValueAsString(r, 12);
-                modeloC.TotalList = "="+ sl.GetCellFormula(r, 13);
+                modeloC.TotalList = "=" + sl.GetCellFormula(r, 13);
                 modeloC.Discount = sl.GetCellValueAsString(r, 14);
-                modeloC.TotalNet = "="+sl.GetCellFormula(r, 15);
+                modeloC.TotalNet = "=" + sl.GetCellFormula(r, 15);
                 modeloC.EachXferList = sl.GetCellValueAsString(r, 16);
                 modeloC.EachXferNet = sl.GetCellValueAsString(r, 17);
                 modeloC.TotXferList = sl.GetCellFormula(r, 18);
                 modeloC.XferDisc = sl.GetCellValueAsString(r, 19);
-                modeloC.TotXferNet = "="+sl.GetCellFormula(r, 20);
+                modeloC.TotXferNet = "=" + sl.GetCellFormula(r, 20);
                 modeloC.EachInitialXfer = sl.GetCellValueAsString(r, 21);
-                modeloC.TotInitialXfer = "="+sl.GetCellFormula(r, 22);
+                modeloC.TotInitialXfer = "=" + sl.GetCellFormula(r, 22);
                 modeloC.VendorCode = sl.GetCellValueAsString(r, 23);
                 modeloC.Weight = sl.GetCellValueAsString(r, 24);
                 modeloC.MarketGroup = sl.GetCellValueAsString(r, 25);
@@ -111,6 +113,70 @@ namespace Comparacion
             }
             
             
+        }
+
+        public void obtenBasketMaestra()
+        {
+            Modelo_canasta modeloC;
+            SLDocument sl = new SLDocument(path, Nombre);
+            
+            for(int r = 4; r<2420; r++)
+            {
+                if (!string.IsNullOrEmpty(sl.GetCellValueAsString(r, 7)))
+                {
+                    while (!string.IsNullOrEmpty(sl.GetCellValueAsString(r, 7)))
+                    {
+                        modeloC = new Modelo_canasta();
+                        modeloC.Area = "";
+                        modeloC.Leavel = sl.GetCellValueAsString(r,2);
+                        modeloC.Item = "=" + sl.GetCellFormula(r, 3);
+                        modeloC.Qty = sl.GetCellValueAsString(r,4);
+                        modeloC.ReqDate = sl.GetCellValueAsString(r, 5);
+                        modeloC.ProductType = sl.GetCellValueAsString(r, 6);
+                        modeloC.Model = sl.GetCellValueAsString(r, 7);
+                        modeloC.AuxSpec1 = sl.GetCellValueAsString(r, 8);
+                        modeloC.Description = sl.GetCellValueAsString(r, 9);
+                        modeloC.LongDescription = sl.GetCellValueAsString(r, 10);
+                        modeloC.EachList = sl.GetCellValueAsString(r, 11);
+                        modeloC.EachNet = sl.GetCellValueAsString(r, 12);
+                        modeloC.TotalList = "=" + sl.GetCellFormula(r, 13);
+                        modeloC.Discount = sl.GetCellValueAsString(r, 14);
+                        modeloC.TotalNet = "=" + sl.GetCellFormula(r, 15);
+                        modeloC.EachXferList = sl.GetCellValueAsString(r, 16);
+                        modeloC.EachXferNet = sl.GetCellValueAsString(r, 17);
+                        modeloC.TotXferList = sl.GetCellFormula(r, 18);
+                        modeloC.XferDisc = sl.GetCellValueAsString(r, 19);
+                        modeloC.TotXferNet = "=" + sl.GetCellFormula(r, 20);
+                        modeloC.EachInitialXfer = sl.GetCellValueAsString(r, 21);
+                        modeloC.TotInitialXfer = "=" + sl.GetCellFormula(r, 22);
+                        modeloC.VendorCode = sl.GetCellValueAsString(r, 23);
+                        modeloC.Weight = sl.GetCellValueAsString(r, 24);
+                        modeloC.MarketGroup = sl.GetCellValueAsString(r, 25);
+                        modeloC.setNet = sl.GetCellValueAsString(r, 26);
+                        modeloC.DiscountA = sl.GetCellValueAsString(r, 27);
+                        modeloC.DiscountB = sl.GetCellValueAsString(r, 28);
+                        modeloC.DiscountC = sl.GetCellValueAsString(r, 28);
+                        modeloC.DiscountD = sl.GetCellValueAsString(r, 30);
+                        modeloC.DiscountE = sl.GetCellValueAsString(r, 31);
+                        modeloC.LeadTime = sl.GetCellValueAsString(r, 32);
+                        modeloC.LifeCycle = sl.GetCellValueAsString(r, 33);
+                        modeloC.Country = sl.GetCellValueAsString(r, 34);
+                        modeloC.LineItem = sl.GetCellValueAsString(r, 35);
+                        modeloC.MfgCurrency = sl.GetCellValueAsString(r, 36);
+                        modeloC.TagSet = sl.GetCellValueAsString(r, 37);
+                        modeloC.TagQty = sl.GetCellValueAsString(r, 38);
+                        modeloC.ModeloJornadas = sl.GetCellValueAsString(r, 39);
+                        modeloC.EEC = sl.GetCellValueAsString(r, 40);
+                        basketMaestra.Add(modeloC);
+                        
+                        r++;
+                    }
+                }
+                
+            }
+
+            sl.CloseWithoutSaving();
+
         }
     }
 }

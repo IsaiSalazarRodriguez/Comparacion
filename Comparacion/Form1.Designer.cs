@@ -50,6 +50,7 @@
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -142,7 +143,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(392, 104);
+            this.button4.Location = new System.Drawing.Point(392, 52);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 9;
@@ -192,7 +193,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(392, 255);
+            this.button5.Location = new System.Drawing.Point(392, 271);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 59);
             this.button5.TabIndex = 15;
@@ -202,7 +203,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(392, 188);
+            this.button6.Location = new System.Drawing.Point(392, 110);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 16;
@@ -247,11 +248,22 @@
             this.label5.TabIndex = 20;
             this.label5.Text = "Elementos que no aparecen en basket";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(392, 173);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 46);
+            this.button7.TabIndex = 21;
+            this.button7.Text = "Todos Directo";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1448, 648);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.listBox4);
@@ -309,6 +321,7 @@
         private System.Windows.Forms.ListBox listBox4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button7;
     }
 }
 

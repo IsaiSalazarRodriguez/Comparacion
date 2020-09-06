@@ -48,5 +48,17 @@ namespace Comparacion
         public String TagQty { set; get; }
         public String ModeloJornadas { set; get; }
         public String EEC { set; get; }
+
+        private bool visitado = false;
+
+        public void setvisitado()
+        {
+            visitado = true;
+        }
+        public bool getvisitado()
+        {
+            return visitado;
+        }
+
     }
 }
