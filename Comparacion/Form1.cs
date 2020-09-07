@@ -99,8 +99,8 @@ namespace Comparacion
             dataGridView3.Rows.Clear();
             listBox4.Items.Clear();
             listBox3.Items.Clear();
-            /*try
-             {*/
+            try
+             {
             indiceA = listBox1.SelectedIndex;
             indiceB = listBox2.SelectedIndex;
             archivo1.listaHojas[indiceA].obtenTabla();
@@ -119,11 +119,11 @@ namespace Comparacion
             dataGridView3.DataSource = archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta;
             cambiaCeldas();
 
-            /*}
+            }
             catch (Exception)
             {
                 MessageBox.Show("Selecciona un elemento de ambas listas");
-            }*/
+            }
 
 
 
