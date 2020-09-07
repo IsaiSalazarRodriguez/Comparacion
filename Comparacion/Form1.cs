@@ -57,12 +57,11 @@ namespace Comparacion
             {
                 ruta3 = openFileDialog1.FileName;
                 textBox3.Text = ruta3;
-                archivo3 = new Excel();
-                Hoja nueva = new Hoja(ruta3, "BASKET");
-                nueva.obtenBasketMaestra();
-                archivo3.listaHojas.Add(nueva);
-                
-                
+                archivo3 = new Excel(ruta3, 0);
+                imprime3(archivo3.listaHojas);
+
+
+
             }
         }
 
@@ -82,39 +81,49 @@ namespace Comparacion
                 listBox2.Items.Add(lib.Nombre);
             }
         }
+        private void imprime3(List<Hoja> libro)
+        {
+            listBox5.Items.Clear();
+            foreach (Hoja lib in libro)
+            {
+                listBox5.Items.Add(lib.Nombre);
+            }
+        }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            Hoja nueva = new Hoja(ruta3, listBox5.Items[listBox5.SelectedIndex].ToString());
+            archivo3.listaHojas.Add(nueva);
             int indiceA;
             int indiceB;
             dataGridView3.Rows.Clear();
             listBox4.Items.Clear();
             listBox3.Items.Clear();
-           try
-            {
-                indiceA = listBox1.SelectedIndex;
-                indiceB = listBox2.SelectedIndex;
-                archivo1.listaHojas[indiceA].obtenTabla();
-                archivo2.listaHojas[indiceB].obtenTabla();
-                dataGridView1.DataSource = archivo1.listaHojas[indiceA].modelos;
-                dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
-                Modelo_canasta gabinete = new Modelo_canasta();
-                
-                gabinete.Area = archivo2.listaHojas[listBox2.SelectedIndex].Nombre;
-                archivo3.listaHojas[0].modelosCanasta.Add(gabinete);
-                
-                comparaListas();
-                Modelo_canasta total = new Modelo_canasta();
-                total.EachNet = "Process Level Total";
-                archivo3.listaHojas[0].modelosCanasta.Add(total);
-                dataGridView3.DataSource = archivo3.listaHojas[0].modelosCanasta;
-                cambiaCeldas();
+            /*try
+             {*/
+            indiceA = listBox1.SelectedIndex;
+            indiceB = listBox2.SelectedIndex;
+            archivo1.listaHojas[indiceA].obtenTabla();
+            archivo2.listaHojas[indiceB].obtenTabla();
+            dataGridView1.DataSource = archivo1.listaHojas[indiceA].modelos;
+            dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
+            Modelo_canasta gabinete = new Modelo_canasta();
 
-            }
+            gabinete.Area = archivo2.listaHojas[listBox2.SelectedIndex].Nombre;
+            archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta.Add(gabinete);
+
+            comparaListas();
+            Modelo_canasta total = new Modelo_canasta();
+            total.EachNet = "Process Level Total";
+            archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta.Add(total);
+            dataGridView3.DataSource = archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta;
+            cambiaCeldas();
+
+            /*}
             catch (Exception)
             {
                 MessageBox.Show("Selecciona un elemento de ambas listas");
-            }
+            }*/
 
 
 
@@ -135,16 +144,16 @@ namespace Comparacion
             int cont = 0;
             bool band1 = true;
             bool band2 = true;
-            foreach(Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
+            foreach (Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
             {
                 band1 = true;
-                foreach(Parte par in archivo1.listaHojas[listBox1.SelectedIndex].modelos)
+                foreach (Parte par in archivo1.listaHojas[listBox1.SelectedIndex].modelos)
                 {
                     if (par2.parte.Equals(par.parte))
                     {
                         if (par.cantidad.Equals(par2.cantidad) == false)
                         {
-                            if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad",cont))
+                            if (!archivo3.listaHojas[listBox5.SelectedIndex].obtenRenglon(par2.parte, par2.cantidad, "Cantidad", cont))
                             {
                                 listBox4.Items.Add(par2.parte);
                             }
@@ -159,7 +168,7 @@ namespace Comparacion
                 }
                 if (band1)
                 {
-                    if(!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Agregado",cont))
+                    if (!archivo3.listaHojas[listBox5.SelectedIndex].obtenRenglon(par2.parte, par2.cantidad, "Agregado", cont))
                     {
                         listBox4.Items.Add(par2.parte);
                     }
@@ -168,17 +177,17 @@ namespace Comparacion
                         cont++;
                     }
                 }
-                
+
             }
-            foreach(Parte partesita in archivo1.listaHojas[listBox1.SelectedIndex].modelos)
+            foreach (Parte partesita in archivo1.listaHojas[listBox1.SelectedIndex].modelos)
             {
                 band2 = true;
-                foreach(Parte partesota in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
+                foreach (Parte partesota in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
                 {
                     if (partesota.parte.Equals(partesita.parte))
                     {
                         band2 = false;
-                        
+
                     }
                 }
                 if (band2)
@@ -280,7 +289,7 @@ namespace Comparacion
                         superlista[i].TotXferNet = "=D" + (i + 2).ToString() + "*Q" + (i + 2).ToString();
                         superlista[i].TotInitialXfer = "=D" + (i + 2).ToString() + "*Q" + (i + 2).ToString();
                         inicio++;
-                        superlista[i].setvisitado();
+
 
                     }
                 }
@@ -290,20 +299,15 @@ namespace Comparacion
                 }
 
             }
-            foreach (Modelo_canasta super in superlista)
-            {
-                if (super.TotalNet != null && super.TotalList != null)
-                {
-                    listBox3.Items.Add(super.TotalList);
-                    listBox4.Items.Add(super.TotalNet);
-                }
-            }
+
 
 
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
+            Hoja nueva = new Hoja(ruta3, listBox5.Items[listBox5.SelectedIndex].ToString());
+            archivo3.listaHojas.Add(nueva);
             int cont = 0;
             dataGridView3.Rows.Clear();
             listBox3.Items.Clear();
@@ -312,13 +316,13 @@ namespace Comparacion
             {
                 Modelo_canasta gabinete = new Modelo_canasta();
                 gabinete.Area = archivo2.listaHojas[listBox2.SelectedIndex].Nombre;
-                archivo3.listaHojas[0].modelosCanasta.Add(gabinete);
+                archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta.Add(gabinete);
                 int indiceB = listBox2.SelectedIndex;
                 archivo2.listaHojas[indiceB].obtenTabla();
                 dataGridView2.DataSource = archivo2.listaHojas[indiceB].modelos;
                 foreach (Parte par2 in archivo2.listaHojas[listBox2.SelectedIndex].modelos)
                 {
-                    if (!archivo3.listaHojas[0].obtenRenglon(par2.parte, par2.cantidad, "Cantidad", cont))
+                    if (!archivo3.listaHojas[listBox5.SelectedIndex].obtenRenglon(par2.parte, par2.cantidad, "Cantidad", cont))
                     {
                         listBox4.Items.Add(par2.parte);
                     }
@@ -327,13 +331,13 @@ namespace Comparacion
                         cont++;
                     }
                 }
-                
+
                 Modelo_canasta total = new Modelo_canasta();
                 total.EachNet = "Process Level Total";
-                
-                
-                archivo3.listaHojas[0].modelosCanasta.Add(total);
-                dataGridView3.DataSource = archivo3.listaHojas[0].modelosCanasta;
+
+
+                archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta.Add(total);
+                dataGridView3.DataSource = archivo3.listaHojas[listBox5.SelectedIndex].modelosCanasta;
                 cambiaCeldas();
 
             }
@@ -341,11 +345,15 @@ namespace Comparacion
             {
                 MessageBox.Show("Selecciona un elemento de ambas listas");
             }
-            
+
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            Hoja nueva = new Hoja(ruta3, listBox5.Items[listBox5.SelectedIndex].ToString());
+            nueva.obtenBasketMaestra();
+
+            archivo3.listaHojas.Add(nueva);
             int ren = 0;
             Modelo_canasta modeloC;
             dataGridView3.Rows.Clear();
@@ -355,8 +363,8 @@ namespace Comparacion
             try
             {
 
-                
-                for(int j = 0; j<archivo2.listaHojas.Count; j++)
+
+                for (int j = 0; j < archivo2.listaHojas.Count; j++)
                 {
                     Modelo_canasta gabinete = new Modelo_canasta();
                     gabinete.Area = archivo2.listaHojas[j].Nombre;
@@ -365,8 +373,9 @@ namespace Comparacion
                     archivo2.listaHojas[j].obtenTabla();
                     foreach (Parte par2 in archivo2.listaHojas[j].modelos)
                     {
-                        foreach(Modelo_canasta mod in archivo3.listaHojas[0].basketMaestra)
+                        foreach (Modelo_canasta mod in archivo3.listaHojas[archivo3.listaHojas.Count-1].basketMaestra)
                         {
+                            
                             if (mod.Model.Contains(par2.parte))
                             {
                                 modeloC = new Modelo_canasta();
@@ -410,6 +419,8 @@ namespace Comparacion
                                 modeloC.TagQty = mod.TagQty;
                                 modeloC.ModeloJornadas = mod.ModeloJornadas;
                                 modeloC.EEC = mod.EEC;
+                                modeloC.areaP = mod.areaP;
+                                modeloC.Sistema = mod.Sistema;
                                 superlista.Add(modeloC);
                                 break;
 
@@ -419,20 +430,29 @@ namespace Comparacion
 
                     Modelo_canasta total = new Modelo_canasta();
                     total.EachNet = "Process Level Total";
-                    
+
 
                     superlista.Add(total);
-                    
+
                 }
-            cambiaLista();
-            dataGridView3.DataSource = superlista;
-            
-                
+                cambiaLista();
+                dataGridView3.DataSource = superlista;
+
+
             }
             catch (Exception)
             {
                 MessageBox.Show("Selecciona un elemento de ambas listas");
             }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }

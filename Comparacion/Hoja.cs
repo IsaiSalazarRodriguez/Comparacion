@@ -101,7 +101,8 @@ namespace Comparacion
                 modeloC.TagQty = sl.GetCellValueAsString(r, 38);
                 modeloC.ModeloJornadas = sl.GetCellValueAsString(r, 39);
                 modeloC.EEC = sl.GetCellValueAsString(r, 40);
-
+                modeloC.Sistema = sl.GetCellValueAsString(r, 41);
+                modeloC.areaP = sl.GetCellValueAsString(r, 42);
                 modelosCanasta.Add(modeloC);
                 sl.CloseWithoutSaving();
                 return true;
@@ -167,6 +168,8 @@ namespace Comparacion
                         modeloC.TagQty = sl.GetCellValueAsString(r, 38);
                         modeloC.ModeloJornadas = sl.GetCellValueAsString(r, 39);
                         modeloC.EEC = sl.GetCellValueAsString(r, 40);
+                        modeloC.Sistema = sl.GetCellValueAsString(r, 41);
+                        modeloC.areaP = sl.GetCellValueAsString(r, 42);
                         basketMaestra.Add(modeloC);
                         
                         r++;

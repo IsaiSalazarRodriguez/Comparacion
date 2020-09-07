@@ -25,10 +25,10 @@ namespace Comparacion
             
         }
 
-        public Excel() {
-            excel.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
-            KillSpecificExcelFileProcess(path);
+        public Excel(String path, int codigo) {
+            this.path = path;
+            wb = excel.Workbooks.Open(path);
+            cargaLista2();
         }
 
         private void cargaLista()
@@ -53,6 +53,28 @@ namespace Comparacion
             System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
             KillSpecificExcelFileProcess(path);
            
+
+        }
+        private void cargaLista2()
+        {
+            Hoja aux;
+            for (int i = 1; i < wb.Worksheets.Count; i++)
+            {
+
+                ws = wb.Worksheets[i];
+                aux = new Hoja(path, ws.Name);
+                aux.Nombre = ws.Name;
+                aux.indice = i;
+                listaHojas.Add(aux);
+
+            }
+            wb.Close(0);
+            excel.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
+            KillSpecificExcelFileProcess(path);
+
 
         }
         private void KillSpecificExcelFileProcess(string excelFileName)
